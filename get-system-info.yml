@@ -1,6 +1,7 @@
 ---
 - name: Gather system info
   hosts: "firewall_lavi"
+  gather_facts: no
   connection: local
 
   vars:
