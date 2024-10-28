@@ -38,5 +38,5 @@
         service: "{{ service }}"
         description: "{{ description }}"
         state: "present"
-#      delegate_to: localhost
-#      when: connection.success
+      delegate_to: localhost
+      when: connection.success
