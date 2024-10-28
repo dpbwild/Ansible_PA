@@ -41,7 +41,7 @@
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ device }}"
         rule_name: "{{ rule_name }}"
-        source: "{{ regla_existente.object['source'] + [nueva_source_ip] }}"
+        source: "{{ (regla_existente.object['source']) + [nueva_source_ip] }}"
         state: present
       when: not ip_existe    
        
