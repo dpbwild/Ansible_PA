@@ -13,6 +13,10 @@
     application: ["web-browsing"]
     service: ["service-http"]
     description: "Regla modificada por Ansible AWX"
+  
+  collections:
+    - paloaltonetworks.panos
+  
   tasks:
     - name: Conectar al firewall
       paloaltonetworks.panos.panos_connect:
@@ -63,8 +67,7 @@
 
 
 
-  #collections:
-   # - paloaltonetworks.panos
+
     
  #   - name: Verificar conexión al firewall
   #    debug:
