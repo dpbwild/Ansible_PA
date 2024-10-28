@@ -15,7 +15,7 @@
     action: "allow" # Acción de la regla (allow, deny)
     source_zone: ["any"] # Zonas de origen
     destination_zone: ["any"] # Zonas de destino
-    source_ip: ["any"]
+    source_ip: ["10.96.144.103"]
     destination_ip: ["any"]
     application: ["any"]
     service: ["service-http"]
