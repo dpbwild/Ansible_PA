@@ -36,21 +36,29 @@
     - name: Verificar si la IP ya está en la lista de orígenes
       set_fact:
         ip_existe: "{{ nueva_source_ip in (regla_existente.object['source'] | default([])) }}"
-       
-    - name: Editar la regla de seguridad en el firewall
+
+    - name: Agregar la nueva IP a la lista de direcciones de origen de la regla si no existe
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ device }}"
         rule_name: "{{ rule_name }}"
+        source: "{{ regla_existente.object['source'] + [nueva_source_ip] }}"
+        state: present
+      when: not ip_existe    
+       
+#    - name: Editar la regla de seguridad en el firewall
+#      paloaltonetworks.panos.panos_security_rule:
+#        provider: "{{ device }}"
+#        rule_name: "{{ rule_name }}"
         #action: "{{ action }}"
         #source_zone: "{{ source_zone }}"
         #destination_zone: "{{ destination_zone }}"
-        source_ip: "{{ nueva_source_ip }}"
+#        source_ip: "{{ nueva_source_ip }}"
         #destination_ip: "{{ destination_ip }}"
         #application: "{{ application }}"
         #service: "{{ service }}"
         #disabled: "false"
-        description: "{{ description }}"
-        state: "present"
+ #       description: "{{ description }}"
+ #       state: "present"
  
 #  tasks:
 #    - name: Mostrar el nombre de la regla editada
