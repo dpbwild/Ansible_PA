@@ -3,7 +3,12 @@
   hosts: "firewall_lavi"
   connection: local
   gather_facts: no
- 
+
+  vars_prompt:
+    - name: "rule_name"
+      prompt: "Por favor ingrese el nombre de la relga a editar"
+      private: no # Si es 'yes', oculta el valor ingresado (útil para contraseñas)
+      
   vars:
     device:
       ip_address: "{{ ip_address }}"
@@ -11,7 +16,7 @@
       password: "{{ password }}"
     
     # Variables para el firewall
-    rule_name: "testawx" # Nombre de la regla a editar
+#    rule_name: "testawx" # Nombre de la regla a editar
     action: "allow" # Acción de la regla (allow, deny)
     source_zone: ["any"] # Zonas de origen
     destination_zone: ["any"] # Zonas de destino
