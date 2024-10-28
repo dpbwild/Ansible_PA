@@ -1,0 +1,26 @@
+---
+- name: Editar una regla de seguridad en el firewall Palo Alto
+  hosts: firewalls
+  gather_facts: false
+  collections:
+    - paloaltonetworks.panos
+
+  tasks:
+    - name: Modificar regla de seguridad
+      panos_security_rule:
+        provider: "{{ panos_provider }}"
+        rule_name: "nombre_de_la_regla"
+        description: "Descripción actualizada"
+        source_zone: ["trust"]
+        destination_zone: ["untrust"]
+        source_ip: ["192.168.1.0/24"]
+        destination_ip: ["0.0.0.0/0"]
+        application: ["web-browsing"]
+        action: "allow"
+        log_setting: "Logging-Profile-Name"
+        state: "present"
+      register: rule_result
+
+    - name: Confirmar el cambio
+      debug:
+        msg: "Regla de seguridad modificada con éxito: {{ rule_result }}"
