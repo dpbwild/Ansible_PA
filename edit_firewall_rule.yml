@@ -39,4 +39,4 @@
         description: "{{ description }}"
         state: "present"
       delegate_to: localhost
-      when: connection.success
+      when: device.success
