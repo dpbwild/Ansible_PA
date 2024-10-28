@@ -24,7 +24,7 @@
   collections:
     - paloaltonetworks.panos
   
-tasks:
+  tasks:
     - name: Editar la regla de seguridad en el firewall
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ device }}"
