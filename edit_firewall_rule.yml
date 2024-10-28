@@ -27,10 +27,11 @@
   tasks:
 
     - name: Obtener la regla de seguridad actual
-      paloaltonetworks.panos.panos_security_rule_facts:
+      paloaltonetworks.panos.panos_security_rule:
         provider: "{{ device }}"
-        name: "{{ rule_name }}"
-      register: rule_info
+        rule_name: "{{ rule_name }}"
+        state: gathered
+      register: regla_existente
        
     - name: Editar la regla de seguridad en el firewall
       paloaltonetworks.panos.panos_security_rule:
