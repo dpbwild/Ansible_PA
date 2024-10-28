@@ -15,7 +15,7 @@
     #action: "allow" # Acción de la regla (allow, deny)
     #source_zone: ["any"] # Zonas de origen
     #destination_zone: ["any"] # Zonas de destino
-    source_ip: ["10.96.144.10"]
+    nueva_source_ip: ["10.96.144.10"]
     #destination_ip: ["any"]
     #application: ["any"]
     #service: ["service-http"]
@@ -25,6 +25,13 @@
     - paloaltonetworks.panos
   
   tasks:
+
+    - name: Obtener la regla de seguridad actual
+      paloaltonetworks.panos.panos_security_rule_facts:
+        provider: "{{ device }}"
+        name: "{{ rule_name }}"
+      register: rule_info
+       
     - name: Editar la regla de seguridad en el firewall
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ device }}"
