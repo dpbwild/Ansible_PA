@@ -32,7 +32,7 @@
         #source_zone: "{{ source_zone }}"
         #destination_zone: "{{ destination_zone }}"
         source_ip: "{{ source_ip }}"
-        destination_ip: "{{ destination_ip }}"
+        #destination_ip: "{{ destination_ip }}"
         #application: "{{ application }}"
         #service: "{{ service }}"
         #disabled: "false"
