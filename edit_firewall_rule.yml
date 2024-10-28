@@ -20,12 +20,7 @@
     application: ["web-browsing"]
     service: ["service-http"]
     description: "Regla modificada por Ansible AWX"
-
-  vars_prompt:
-    - name: "rule_name"
-      prompt: "Por favor ingrese el nombre de la relga a editar"
-      private: no # Si es 'yes', oculta el valor ingresado (útil para contraseñas)
-      
+   
   collections:
     - paloaltonetworks.panos
   
