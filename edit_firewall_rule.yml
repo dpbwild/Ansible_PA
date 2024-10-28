@@ -43,3 +43,8 @@
         service: "{{ service }}"
         description: "{{ description }}"
         state: "present"
+ 
+  tasks:
+    - name: Mostrar el nombre de la regla editada
+      debug:
+        msg: "La regla editada fue: {{ rule_name }}"
