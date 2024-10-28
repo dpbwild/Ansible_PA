@@ -3,6 +3,10 @@
   hosts: firewall_lavi
   connection: local
   gather_facts: no
+
+    collections:
+    - paloaltonetworks.panos
+    
   tasks:
     - name: Conectar a firewall Palo Alto
       panos_op:
