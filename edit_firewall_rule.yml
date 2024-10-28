@@ -1,5 +1,5 @@
 ---
-- name: Editar una regla de seguridad en Palo Alto
+- name: Actualizar una regla de seguridad en Palo Alto
   hosts: "firewall_lavi"
   gather_facts: no
    
@@ -39,7 +39,7 @@
         description: "{{ description }}"
         state: "present"
  
-  tasks:
-    - name: Mostrar el nombre de la regla editada
-      debug:
-        msg: "La regla editada fue: {{ rule_name }}"
+#  tasks:
+#    - name: Mostrar el nombre de la regla editada
+#      debug:
+#        msg: "La regla editada fue: {{ rule_name }}"
