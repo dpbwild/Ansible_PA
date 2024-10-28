@@ -19,7 +19,7 @@
     destination_ip: ["any"]
     application: ["any"]
     service: ["service-http"]
-    description: "Regla modificada por Ansible AWX"
+    description: "Regla modificada por Ansible AWX1"
    
   collections:
     - paloaltonetworks.panos
