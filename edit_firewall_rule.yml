@@ -18,6 +18,11 @@
     - paloaltonetworks.panos
   
   tasks:
+    - name: Gather facts for device
+      paloaltonetworks.panos.panos_facts:
+        provider: "{{ device }}"
+  
+  tasks:
     - name: Conectar al firewall
       paloaltonetworks.panos.panos_connect:
         ip_address: "{{ fw_ip }}"
