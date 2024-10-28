@@ -1,7 +1,6 @@
 ---
 - name: Editar una regla de seguridad en Palo Alto
   hosts: "firewall_lavi"
-  connection: local
   gather_facts: no
    
   vars:
