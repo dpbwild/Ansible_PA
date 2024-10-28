@@ -2,6 +2,7 @@
 - name: Actualizar una regla de seguridad en Palo Alto
   hosts: "firewall_lavi"
   gather_facts: no
+  connection: local
    
   vars:
     device:
