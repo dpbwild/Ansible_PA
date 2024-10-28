@@ -17,7 +17,7 @@
     destination_zone: ["any"] # Zonas de destino
     source_ip: ["any"]
     destination_ip: ["any"]
-    application: ["web-browsing"]
+    application: ["any"]
     service: ["service-http"]
     description: "Regla modificada por Ansible AWX"
    
