@@ -18,8 +18,11 @@
     - paloaltonetworks.panos
   
   tasks:
-    - name: Gather facts for device
-      paloaltonetworks.panos.panos_facts:
-        provider: "{{ device }}"
-  
+    - name: Conectar al firewall
+      paloaltonetworks.panos.panos_connect:
+        ip_address: "{{ fw_ip }}"
+        username: "{{ fw_username }}"
+        password: "{{ fw_password }}"
+        api_key: "{{ api_key | default(omit) }}"  # Utiliza la API key si está definida
+      register: connection
   
