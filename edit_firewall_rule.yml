@@ -32,6 +32,10 @@
         rule_name: "{{ rule_name }}"
         state: gathered
       register: regla_existente
+
+    - name: Verificar si la IP ya está en la lista de orígenes
+      set_fact:
+        ip_existe: "{{ nueva_source_ip in regla_existente.object['source'] }}"
        
     - name: Editar la regla de seguridad en el firewall
       paloaltonetworks.panos.panos_security_rule:
