@@ -1,8 +1,15 @@
 ---
 - name: Editar una regla de seguridad en Palo Alto
   hosts: "firewall_lavi"
+  connection: local
   gather_facts: no
+ 
   vars:
+    device:
+      ip_address: "{{ ip_address }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+    
     # Variables para el firewall
     rule_name: "Nombre_de_la_Regla" # Nombre de la regla a editar
     action: "allow" # Acción de la regla (allow, deny)
@@ -13,16 +20,23 @@
     application: ["web-browsing"]
     service: ["service-http"]
     description: "Regla modificada por Ansible AWX"
-  
+
   collections:
     - paloaltonetworks.panos
   
-  tasks:
-    - name: Conectar al firewall
-      paloaltonetworks.panos.panos_connect:
-        ip_address: "{{ fw_ip }}"
-        username: "{{ fw_username }}"
-        password: "{{ fw_password }}"
-        api_key: "{{ api_key | default(omit) }}"  # Utiliza la API key si está definida
-      register: connection
-  
+tasks:
+    - name: Editar la regla de seguridad en el firewall
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ device }}"
+        rule_name: "{{ rule_name }}"
+        action: "{{ action }}"
+        source_zone: "{{ source_zone }}"
+        destination_zone: "{{ destination_zone }}"
+        source_address: "{{ source_address }}"
+        destination_address: "{{ destination_address }}"
+        application: "{{ application }}"
+        service: "{{ service }}"
+        description: "{{ description }}"
+        state: "present"
+      delegate_to: localhost
+      when: connection.success
