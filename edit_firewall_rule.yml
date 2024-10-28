@@ -1,6 +1,6 @@
 ---
 - name: Editar una regla de seguridad en Palo Alto
-  hosts: localhost
+  hosts: "firewall_lavi"
   gather_facts: no
   vars:
     # Variables para el firewall
