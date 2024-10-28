@@ -22,12 +22,12 @@
         username: "{{ fw_username }}"
         password: "{{ fw_password }}"
         rule_name: "{{ rule_name }}"
-        source_zone: ["untrust"]
-        destination_zone: ["trust"]
-        source_ip: ["any"]
+        source_zone: ["any"]
+        destination_zone: ["any"]
+        source_ip: ["10.96.144.104"]
         destination_ip: ["any"]
-        application: ["web-browsing", "ssl"]
-        service: ["service-http", "service-https"]
+        application: ["any"]
+        service: ["any"]
         action: "allow"
         description: "Regla editada por Ansible AWX"
         operation: "update"
