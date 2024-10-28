@@ -1,26 +1,38 @@
 ---
-- name: Editar una regla de seguridad en el firewall Palo Alto
-  hosts: firewalls
-  gather_facts: false
-  collections:
-    - paloaltonetworks.panos
-
+- name: Editar regla de seguridad en Palo Alto
+  hosts: firewall_lavi
+  connection: local
+  gather_facts: no
   tasks:
-    - name: Modificar regla de seguridad
-      panos_security_rule:
-        provider: "{{ panos_provider }}"
-        rule_name: "nombre_de_la_regla"
-        description: "Descripción actualizada"
-        source_zone: ["trust"]
-        destination_zone: ["untrust"]
-        source_ip: ["192.168.1.0/24"]
-        destination_ip: ["0.0.0.0/0"]
-        application: ["web-browsing"]
-        action: "allow"
-        log_setting: "Logging-Profile-Name"
-        state: "present"
-      register: rule_result
+    - name: Conectar a firewall Palo Alto
+      panos_op:
+        ip_address: "{{ fw_ip }}"
+        username: "{{ fw_username }}"
+        password: "{{ fw_password }}"
+        cmd: 'show system info'
+      register: firewall_info
 
-    - name: Confirmar el cambio
+    - name: Verificar conexión al firewall
       debug:
-        msg: "Regla de seguridad modificada con éxito: {{ rule_result }}"
+        var: firewall_info.stdout
+
+    - name: Editar regla de seguridad en el firewall
+      panos_security_rule:
+        ip_address: "{{ fw_ip }}"
+        username: "{{ fw_username }}"
+        password: "{{ fw_password }}"
+        rule_name: "{{ rule_name }}"
+        source_zone: ["untrust"]
+        destination_zone: ["trust"]
+        source_ip: ["any"]
+        destination_ip: ["any"]
+        application: ["web-browsing", "ssl"]
+        service: ["service-http", "service-https"]
+        action: "allow"
+        description: "Regla editada por Ansible AWX"
+        operation: "update"
+      register: rule_update
+
+    - name: Confirmar actualización de la regla
+      debug:
+        msg: "Regla {{ rule_name }} actualizada correctamente en el firewall {{ fw_ip }}."
