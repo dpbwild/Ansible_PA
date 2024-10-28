@@ -3,12 +3,7 @@
   hosts: "firewall_lavi"
   connection: local
   gather_facts: no
-
-  vars_prompt:
-    - name: "rule_name"
-      prompt: "Por favor ingrese el nombre de la relga a editar"
-      private: no # Si es 'yes', oculta el valor ingresado (útil para contraseñas)
-      
+   
   vars:
     device:
       ip_address: "{{ ip_address }}"
@@ -26,6 +21,11 @@
     service: ["service-http"]
     description: "Regla modificada por Ansible AWX"
 
+  vars_prompt:
+    - name: "rule_name"
+      prompt: "Por favor ingrese el nombre de la relga a editar"
+      private: no # Si es 'yes', oculta el valor ingresado (útil para contraseñas)
+      
   collections:
     - paloaltonetworks.panos
   
