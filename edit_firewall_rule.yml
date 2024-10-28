@@ -38,5 +38,3 @@
         service: "{{ service }}"
         description: "{{ description }}"
         state: "present"
-      delegate_to: localhost
-      when: device.success
