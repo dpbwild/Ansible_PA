@@ -37,6 +37,11 @@
       set_fact:
         ip_existe: "{{ nueva_source_ip in (regla_existente.object['source'] | default([])) }}"
 
+      
+    - name: Mostrar el nombre de las ips existentes:
+      debug:
+        msg: "IPs existentes: {{ regla_existente.object['source'] }}"
+
     - name: Agregar la nueva IP a la lista de direcciones de origen de la regla si no existe
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ device }}"
