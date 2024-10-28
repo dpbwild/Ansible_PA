@@ -36,6 +36,7 @@
         destination_ip: "{{ destination_ip }}"
         application: "{{ application }}"
         service: "{{ service }}"
+        disabled: "false"
         description: "{{ description }}"
         state: "present"
  
