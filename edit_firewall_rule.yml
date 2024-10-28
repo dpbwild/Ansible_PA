@@ -15,8 +15,8 @@
     action: "allow" # Acción de la regla (allow, deny)
     source_zone: ["any"] # Zonas de origen
     destination_zone: ["any"] # Zonas de destino
-    source_address: ["any"]
-    destination_address: ["any"]
+    source_ip: ["any"]
+    destination_ip: ["any"]
     application: ["web-browsing"]
     service: ["service-http"]
     description: "Regla modificada por Ansible AWX"
