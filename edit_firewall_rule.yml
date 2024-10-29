@@ -4,11 +4,11 @@
   gather_facts: no
   connection: local
    
-  vars:
-    device:
-      ip_address: "{{ ip_address }}"
-      username: "{{ username }}"
-      password: "{{ password }}"
+ # vars:
+  #  device:
+   #   ip_address: "{{ ip_address }}"
+    #  username: "{{ username }}"
+     # password: "{{ password }}"
 
     
     # Variables para el firewall
@@ -29,7 +29,7 @@
 
     - name: Obtener la regla de seguridad actual
       paloaltonetworks.panos.panos_security_rule:
-        provider: "{{ device }}"
+        provider: "{{ firewall_lavi }}"
         rule_name: "{{ rule_name }}"
         state: gathered
       register: regla_existente
