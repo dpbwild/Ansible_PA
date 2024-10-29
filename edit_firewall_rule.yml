@@ -45,11 +45,11 @@
      
     - name: Verificar si la IP ya está en la lista de orígenes
       set_fact:
-        ip_existe: "{{ nueva_source_ip in (regla_existente.gathered['source'] | default([])) }}"
+        ip_existe: "{{ nueva_source_ip in (regla_existente.gathered['source_ip'] | default([])) }}"
         
     - name: Verificar si hay direcciones IP de origen configuradas
       set_fact:
-        source_ips: "{{ regla_existente.gathered['source'] | default([]) }}"
+        source_ips: "{{ regla_existente.gathered['source_ip'] | default([]) }}"
         
 #    - name: Mostrar el nombre de las ips existentes:
  #     debug:
