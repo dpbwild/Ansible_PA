@@ -15,7 +15,7 @@
     #action: "allow" # Acción de la regla (allow, deny)
     #source_zone: ["any"] # Zonas de origen
     #destination_zone: ["any"] # Zonas de destino
-    nueva_source_ip: "10.96.144.10"
+    nueva_source_ip: ["10.96.144.10"]
     #destination_ip: ["any"]
     #application: ["any"]
     #service: ["service-http"]
@@ -37,7 +37,10 @@
       set_fact:
         ip_existe: "{{ nueva_source_ip in (regla_existente.object['source'] | default([])) }}"
         
-      
+    - name: Verificar si hay direcciones IP de origen configuradas
+      set_fact:
+        source_ips: "{{ regla_existente.object['source'] | default([]) }}"
+        
 #    - name: Mostrar el nombre de las ips existentes:
  #     debug:
   #      msg: "IPs existentes: {{ regla_existente.object['source_ip'] | default([]) }}"
