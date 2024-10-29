@@ -1,15 +1,15 @@
 ---
 - name: Actualizar una regla de seguridad en Palo Alto
-  hosts: localhost
+  hosts: firewall_lavi
   gather_facts: false
   connection: local
    
   vars:
     device:
-      #ip_address: "{{ ip_address }}"
+      ip_address: "{{ ip_address }}"
     #  username: "{{ username }}"
      # password: "{{ password }}"
-      ip_address: "10.96.10.30"
+      
       username: "{{ ansible_user }}"  # El nombre de usuario se toma de la credencial en AWX
       password: "{{ ansible_password }}"  # La contraseña también se obtiene de la credencial en AWX
 
