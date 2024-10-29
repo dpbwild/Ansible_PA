@@ -37,7 +37,12 @@
         vsys: "{{ vsys }}"
         state: gathered
       register: regla_existente
-      
+
+
+    - name: Mostrar contenido completo de la regla existente obtenida para depuración
+    debug:
+      var: regla_existente
+     
     - name: Verificar si la IP ya está en la lista de orígenes
       set_fact:
         ip_existe: "{{ nueva_source_ip in (regla_existente.object['source_ip'] | default([])) }}"
