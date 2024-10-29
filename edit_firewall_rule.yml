@@ -9,6 +9,7 @@
       ip_address: "{{ ip_address }}"
       username: "{{ username }}"
       password: "{{ password }}"
+
     
     # Variables para el firewall
     rule_name: "testawx" # Nombre de la regla a editar
@@ -44,6 +45,21 @@
 #    - name: Mostrar el nombre de las ips existentes:
  #     debug:
   #      msg: "IPs existentes: {{ regla_existente.object['source_ip'] | default([]) }}"
+
+    - name: Verificar y mostrar los parámetros principales de la política de seguridad
+      debug:
+        msg:
+          - "Nombre de la regla: {{ regla_existente.object['name'] | default('No especificado') }}"
+          - "Descripción: {{ regla_existente.object['description'] | default('Sin descripción') }}"
+          - "Acción: {{ regla_existente.object['action'] | default('No especificada') }}"
+          - "De zona(s): {{ regla_existente.object['from'] | default([]) | join(', ') }}"
+          - "A zona(s): {{ regla_existente.object['to'] | default([]) | join(', ') }}"
+          - "IPs de origen: {{ regla_existente.object['source'] | default([]) | join(', ') }}"
+          - "IPs de destino: {{ regla_existente.object['destination'] | default([]) | join(', ') }}"
+          - "Aplicaciones: {{ regla_existente.object['application'] | default([]) | join(', ') }}"
+          - "Servicios: {{ regla_existente.object['service'] | default([]) | join(', ') }}"
+          - "Usuarios: {{ regla_existente.object['source_user'] | default([]) | join(', ') }}"
+          - "Estado: {{ regla_existente.object['disabled'] | default(false) | ternary('Deshabilitada', 'Habilitada') }}"
 
     - name: Agregar la nueva IP a la lista de direcciones de origen de la regla si no existe
       paloaltonetworks.panos.panos_security_rule:
