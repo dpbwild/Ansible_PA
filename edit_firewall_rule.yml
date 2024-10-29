@@ -40,8 +40,8 @@
 
 
     - name: Mostrar contenido completo de la regla existente obtenida para depuración
-    debug:
-      var: regla_existente
+      debug:
+        var: regla_existente
      
     - name: Verificar si la IP ya está en la lista de orígenes
       set_fact:
