@@ -47,8 +47,7 @@
       fail:
         msg: "La regla de seguridad '{{ rule_name }}' no existe en el firewall."
       when: 
-        - regla_existente.gathered is not defined
-        - "'Object not found' in regla_existente.msg"
+        - regla_existente.get('gathered', None) is not defined
 
     - name: Mostrar contenido completo de la regla existente obtenida para depuración
       debug:
