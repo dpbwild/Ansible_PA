@@ -5,6 +5,19 @@
   connection: local
    
   vars:
+
+  vars:
+    ip_quito: "10.96.10.30"     # IP del firewall en Quito
+    ip_lago: "172.30.1.235"      # IP del firewall en Lago
+    ip_guayaquil: "10.64.0.143" # IP del firewall en Guayaquil
+
+
+
+
+
+
+
+    
     device:
       ip_address: "{{ ip_address }}"
       username: "{{ ansible_user }}"  # El nombre de usuario se toma de la credencial en AWX
