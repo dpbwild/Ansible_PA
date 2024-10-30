@@ -41,12 +41,13 @@
         vsys: "{{ vsys }}"
         state: gathered
       register: regla_existente
-      failed_when: "'Object 'testawx1' not found' in (regla_existente.msg | default(''))"
+      ignore_errors: true  # Continúa la ejecución aunque no se encuentre la regla
+      #failed_when: "'Object 'testawx1' not found' in (regla_existente.msg | default(''))"
 
     - name: Validar existencia de la regla
       fail:
         msg: "La regla de seguridad '{{ rule_name }}' no existe en el firewall."
-      when: regla_existente.failed  # Esta condición usa el estado de fallo de la tarea anterior.
+      when: "regla_existente.gathered is not defined"
      
     - name: Mostrar contenido completo de la regla existente obtenida para depuración
       debug:
