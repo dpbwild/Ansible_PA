@@ -84,7 +84,7 @@
         state: present
       when: 
         - accion_ip == "agregar"
-        - nueva_source_ip not in regla_existente.gathered['source_ip']
+        #- nueva_source_ip not in regla_existente.gathered['source_ip']
         #- not ip_existe  
 
     - name: Obtener la regla de seguridad ACTUALIZADA
