@@ -42,6 +42,10 @@
         state: gathered
       register: regla_existente
 
+    - name: Validar existencia de la regla
+      fail:
+        msg: "La regla de seguridad '{{ rule_name }}' no existe en el firewall."
+      when: not regla_existente.gathered
 
     - name: Mostrar contenido completo de la regla existente obtenida para depuración
       debug:
