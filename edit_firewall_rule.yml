@@ -41,6 +41,7 @@
         vsys: "{{ vsys }}"
         state: gathered
       register: regla_existente
+      ignore_errors: true
 
     - name: Validar existencia de la regla
       fail:
