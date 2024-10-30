@@ -41,14 +41,13 @@
         vsys: "{{ vsys }}"
         state: gathered
       register: regla_existente
-      failed_when: false  # No fallar automáticamente si la regla no se encuentra
+      failed_when: "'Object not found' in (regla_existente.msg | default(''))"
 
     - name: Validar existencia de la regla
       fail:
         msg: "La regla de seguridad '{{ rule_name }}' no existe en el firewall."
-      when: 
-        - "'Object not found' in regla_existente.msg"
-
+      when: regla_existente.failed  # Esta condición usa el estado de fallo de la tarea anterior.
+     
     - name: Mostrar contenido completo de la regla existente obtenida para depuración
       debug:
         var: regla_existente
