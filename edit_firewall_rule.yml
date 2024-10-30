@@ -15,7 +15,7 @@
 
     
     # Variables para el firewall
-    rule_name: "testawx" # Nombre de la regla a editar
+    #rule_name: "testawx" # Nombre de la regla a editar
     #action: "allow" # Acción de la regla (allow, deny)
     #source_zone: ["any"] # Zonas de origen
     #destination_zone: ["any"] # Zonas de destino
