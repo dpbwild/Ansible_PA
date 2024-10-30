@@ -5,20 +5,15 @@
   connection: local
    
   vars:
-
-  vars:
     ip_quito: "10.96.10.30"     # IP del firewall en Quito
     ip_lago: "172.30.1.235"      # IP del firewall en Lago
     ip_guayaquil: "10.64.0.143" # IP del firewall en Guayaquil
 
-
-
-
     
-    device:
-      ip_address: "{{ ip_address }}"
-      username: "{{ ansible_user }}"  # El nombre de usuario se toma de la credencial en AWX
-      password: "{{ ansible_password }}"  # La contraseña también se obtiene de la credencial en AWX
+    #device:
+      #ip_address: "{{ ip_address }}"
+      #username: "{{ ansible_user }}"  # El nombre de usuario se toma de la credencial en AWX
+      #password: "{{ ansible_password }}"  # La contraseña también se obtiene de la credencial en AWX
     
     # Variables para el firewall
     rule_name: "PERMISOS TEMPORALES" # Nombre de la regla a editar
@@ -54,7 +49,14 @@
           # Indica si es un firewall individual o Panorama
           use_panorama: "{{ ubicacion == 'Lago Agrio' }}"
 
+    - name: Validar que la IP del firewall o Panorama se haya asignado
+      fail:
+        msg: "La ubicación seleccionada '{{ ubicacion }}' no es válida o no tiene una IP asignada."
+      when: device.ip_address == ""
 
+    - name: Mostrar la IP y el tipo de configuración (Panorama o Firewall individual)
+      debug:
+        msg: "La IP para la ubicación '{{ ubicacion }}' es: {{ device.ip_address }}; uso de Panorama: {{ device.use_panorama }}"
 
 
     - name: Mostrar el valor de accion_ip
