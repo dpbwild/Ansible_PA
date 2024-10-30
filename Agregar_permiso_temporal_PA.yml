@@ -97,7 +97,7 @@
         source_ip: "{{ (regla_existente.gathered['source_ip'] | default([])) | difference(nueva_source_ip_list) }}"
         state: present
       when:
-        - accion_ip_[0] == "eliminar"
+        - accion_ip[0] == "eliminar"
         - ip_existe
         
     - name: Obtener la regla de seguridad ACTUALIZADA
