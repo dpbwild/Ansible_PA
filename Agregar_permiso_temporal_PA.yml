@@ -76,6 +76,10 @@
           - "Usuarios: {{ regla_existente.gathered['source_user'] | default([]) | join(', ') }}"
           - "Estado: {{ regla_existente.gathered['disabled'] | default(false) | ternary('Deshabilitada', 'Habilitada') }}"
 
+    - name: Mostrar el valor de accion_ip
+      debug:
+        msg: "El valor de accion_ip es: {{ accion_ip }}"
+    
     - name: Agregar la nueva IP a la lista de direcciones de origen de la regla si no existe
       paloaltonetworks.panos.panos_security_rule:
         provider: "{{ device }}"
