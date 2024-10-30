@@ -1,5 +1,5 @@
 ---
-- name: Actualizar una regla de seguridad en Palo Alto
+- name: Agregar permiso de internet temporal Palo Alto Lavi
   hosts: firewall_lavi
   gather_facts: false
   connection: local
@@ -7,15 +7,11 @@
   vars:
     device:
       ip_address: "{{ ip_address }}"
-    #  username: "{{ username }}"
-     # password: "{{ password }}"
-      
       username: "{{ ansible_user }}"  # El nombre de usuario se toma de la credencial en AWX
       password: "{{ ansible_password }}"  # La contraseña también se obtiene de la credencial en AWX
-
     
     # Variables para el firewall
-    #rule_name: "testawx" # Nombre de la regla a editar
+    rule_name: "PERMISOS TEMPORALES" # Nombre de la regla a editar
     #action: "allow" # Acción de la regla (allow, deny)
     #source_zone: ["any"] # Zonas de origen
     #destination_zone: ["any"] # Zonas de destino
@@ -23,7 +19,7 @@
     #destination_ip: ["any"]
     #application: ["any"]
     #service: ["service-http"]
-    description: "Regla modificada por Ansible AWX1"
+    description: "Regla modificada por Ansible AWX"
    
   collections:
     - paloaltonetworks.panos
@@ -65,7 +61,7 @@
  #     debug:
   #      msg: "IPs existentes: {{ regla_existente.object['source_ip'] | default([]) }}"
 
-    - name: Mostrar los parámetros principales de la política de seguridad
+    - name: Mostrar los parámetros principales de la política de seguridad PERMISOS TEMPORALES
       debug:
         msg:
           - "Nombre de la regla: {{ regla_existente.gathered['rule_name'] | default('No especificado') }}"
