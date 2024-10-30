@@ -25,6 +25,11 @@
     - paloaltonetworks.panos
   
   tasks:
+
+    - name: Mostrar el valor de accion_ip
+      debug:
+        msg: "El valor de accion_ip es: {{ ip_address }}"
+        
     - name: Convertir nueva_source_ip en lista si es texto
       set_fact:
         nueva_source_ip_list: "{{ nueva_source_ip | from_json }}"
