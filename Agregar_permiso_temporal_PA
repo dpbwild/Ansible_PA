@@ -1,0 +1,109 @@
+---
+- name: Actualizar una regla de seguridad en Palo Alto
+  hosts: firewall_lavi
+  gather_facts: false
+  connection: local
+   
+  vars:
+    device:
+      ip_address: "{{ ip_address }}"
+    #  username: "{{ username }}"
+     # password: "{{ password }}"
+      
+      username: "{{ ansible_user }}"  # El nombre de usuario se toma de la credencial en AWX
+      password: "{{ ansible_password }}"  # La contraseña también se obtiene de la credencial en AWX
+
+    
+    # Variables para el firewall
+    #rule_name: "testawx" # Nombre de la regla a editar
+    #action: "allow" # Acción de la regla (allow, deny)
+    #source_zone: ["any"] # Zonas de origen
+    #destination_zone: ["any"] # Zonas de destino
+    #nueva_source_ip: ["10.96.144.10"]
+    #destination_ip: ["any"]
+    #application: ["any"]
+    #service: ["service-http"]
+    description: "Regla modificada por Ansible AWX1"
+   
+  collections:
+    - paloaltonetworks.panos
+  
+  tasks:
+    - name: Convertir nueva_source_ip en lista si es texto
+      set_fact:
+        nueva_source_ip_list: "{{ nueva_source_ip | from_json }}"
+      when: nueva_source_ip is string
+      
+    - name: Obtener la regla de seguridad actual
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ device }}"
+        rule_name: "{{ rule_name }}"
+        vsys: "{{ vsys }}"
+        state: gathered
+      register: regla_existente
+      ignore_errors: true  # Continúa la ejecución aunque no se encuentre la regla
+      #failed_when: "'Object 'testawx1' not found' in (regla_existente.msg | default(''))"
+
+    - name: Validar existencia de la regla
+      fail:
+        msg: "La regla de seguridad '{{ rule_name }}' no existe en el firewall."
+      when: "regla_existente.gathered is not defined"
+     
+    - name: Mostrar contenido completo de la regla existente obtenida para depuración
+      debug:
+        var: regla_existente
+     
+    - name: Verificar si la IP ya está en la lista de orígenes
+      set_fact:
+        ip_existe: "{{ nueva_source_ip_list[0] in (regla_existente.gathered['source_ip'] | default([])) }}"
+        
+    - name: Verificar si hay direcciones IP de origen configuradas
+      set_fact:
+        source_ips: "{{ regla_existente.gathered['source_ip'] | default([]) }}"
+        
+#    - name: Mostrar el nombre de las ips existentes:
+ #     debug:
+  #      msg: "IPs existentes: {{ regla_existente.object['source_ip'] | default([]) }}"
+
+    - name: Mostrar los parámetros principales de la política de seguridad
+      debug:
+        msg:
+          - "Nombre de la regla: {{ regla_existente.gathered['rule_name'] | default('No especificado') }}"
+          - "Descripción: {{ regla_existente.gathered['description'] | default('Sin descripción') }}"
+          - "Acción: {{ regla_existente.gathered['action'] | default('No especificada') }}"
+          - "De zona(s): {{ regla_existente.gathered['source_zone'] | default([]) | join(', ') }}"
+          - "A zona(s): {{ regla_existente.gathered['destination_zone'] | default([]) | join(', ') }}"
+          - "IPs de origen: {{ regla_existente.gathered['source_ip'] | default([]) | join(', ') }}"
+          - "IPs de destino: {{ regla_existente.gathered['destination_ip'] | default([]) | join(', ') }}"
+          - "Aplicaciones: {{ regla_existente.gathered['application'] | default([]) | join(', ') }}"
+          - "Servicios: {{ regla_existente.gathered['service'] | default([]) | join(', ') }}"
+          - "Usuarios: {{ regla_existente.gathered['source_user'] | default([]) | join(', ') }}"
+          - "Estado: {{ regla_existente.gathered['disabled'] | default(false) | ternary('Deshabilitada', 'Habilitada') }}"
+
+    - name: Agregar la nueva IP a la lista de direcciones de origen de la regla si no existe
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ device }}"
+        rule_name: "{{ rule_name }}"
+        source_ip: "{{ (regla_existente.gathered['source_ip'] | default([])) + nueva_source_ip_list }}"
+        state: present
+      when: not ip_existe    
+       
+#    - name: Editar la regla de seguridad en el firewall
+#      paloaltonetworks.panos.panos_security_rule:
+#        provider: "{{ device }}"
+#        rule_name: "{{ rule_name }}"
+        #action: "{{ action }}"
+        #source_zone: "{{ source_zone }}"
+        #destination_zone: "{{ destination_zone }}"
+#        source_ip: "{{ nueva_source_ip }}"
+        #destination_ip: "{{ destination_ip }}"
+        #application: "{{ application }}"
+        #service: "{{ service }}"
+        #disabled: "false"
+ #       description: "{{ description }}"
+ #       state: "present"
+ 
+#  tasks:
+#    - name: Mostrar el nombre de la regla editada
+#      debug:
+#        msg: "La regla editada fue: {{ rule_name }}"
