@@ -84,17 +84,26 @@
         state: present
       when: not ip_existe  
 
+    - name: Obtener la regla de seguridad ACTUALIZADA
+      paloaltonetworks.panos.panos_security_rule:
+        provider: "{{ device }}"
+        rule_name: "{{ rule_name }}"
+        vsys: "{{ vsys }}"
+        state: gathered
+      register: regla_existente_ac
+      ignore_errors: true  # Continúa la ejecución aunque no se encuentre la regla
+    
     - name: Mostrar los parámetros principales de la política de seguridad PERMISOS TEMPORALES ACTUALIZADA
       debug:
         msg:
-          - "Nombre de la regla: {{ regla_existente.gathered['rule_name'] | default('No especificado') }}"
-          - "Descripción: {{ regla_existente.gathered['description'] | default('Sin descripción') }}"
-          - "Acción: {{ regla_existente.gathered['action'] | default('No especificada') }}"
-          - "De zona(s): {{ regla_existente.gathered['source_zone'] | default([]) | join(', ') }}"
-          - "A zona(s): {{ regla_existente.gathered['destination_zone'] | default([]) | join(', ') }}"
-          - "IPs de origen: {{ regla_existente.gathered['source_ip'] | default([]) | join(', ') }}"
-          - "IPs de destino: {{ regla_existente.gathered['destination_ip'] | default([]) | join(', ') }}"
-          - "Aplicaciones: {{ regla_existente.gathered['application'] | default([]) | join(', ') }}"
-          - "Servicios: {{ regla_existente.gathered['service'] | default([]) | join(', ') }}"
-          - "Usuarios: {{ regla_existente.gathered['source_user'] | default([]) | join(', ') }}"
-          - "Estado: {{ regla_existente.gathered['disabled'] | default(false) | ternary('Deshabilitada', 'Habilitada') }}"
+          - "Nombre de la regla: {{ regla_existente_ac.gathered['rule_name'] | default('No especificado') }}"
+          - "Descripción: {{ regla_existente_ac.gathered['description'] | default('Sin descripción') }}"
+          - "Acción: {{ regla_existente_ac.gathered['action'] | default('No especificada') }}"
+          - "De zona(s): {{ regla_existente_ac.gathered['source_zone'] | default([]) | join(', ') }}"
+          - "A zona(s): {{ regla_existente_ac.gathered['destination_zone'] | default([]) | join(', ') }}"
+          - "IPs de origen: {{ regla_existente_ac.gathered['source_ip'] | default([]) | join(', ') }}"
+          - "IPs de destino: {{ regla_existente_ac.gathered['destination_ip'] | default([]) | join(', ') }}"
+          - "Aplicaciones: {{ regla_existente_ac.gathered['application'] | default([]) | join(', ') }}"
+          - "Servicios: {{ regla_existente_ac.gathered['service'] | default([]) | join(', ') }}"
+          - "Usuarios: {{ regla_existente_ac.gathered['source_user'] | default([]) | join(', ') }}"
+          - "Estado: {{ regla_existente_ac.gathered['disabled'] | default(false) | ternary('Deshabilitada', 'Habilitada') }}"
