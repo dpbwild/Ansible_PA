@@ -87,9 +87,9 @@
         source_ip: "{{ (regla_existente.gathered['source_ip'] | default([])) + nueva_source_ip_list }}"
         state: present
       when: 
-        - accion_ip == "agregar"
+        - accion_ip[0] == "agregar"
         #- nueva_source_ip not in regla_existente.gathered['source_ip']
-        #- not ip_existe  
+        - not ip_existe  
 
     - name: Obtener la regla de seguridad ACTUALIZADA
       paloaltonetworks.panos.panos_security_rule:
