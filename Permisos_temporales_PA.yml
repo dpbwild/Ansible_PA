@@ -64,7 +64,7 @@
       when: nueva_source_ip is string
 
       #SOLO PARA QUITO O GUAYAQUIL
-   -  name: Obtener la regla de seguridad actual (Quito / Gye)
+    - name: Obtener la regla de seguridad actual (Quito / Gye)
       paloaltonetworks.panos.panos_security_rule:
         provider:
         ip_address: "{{ device.ip_address }}"
