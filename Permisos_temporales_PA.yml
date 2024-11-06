@@ -78,7 +78,9 @@
       when: not device.use_panorama # Ejecuta sólo para Quito y Guayaquil
      # ignore_errors: true  # Continúa la ejecución aunque no se encuentre la regla
 
-         
+    - name: Mostrar datos de regla existente para depuración
+      debug:
+        var: regla_existente
       #failed_when: "'Object 'testawx1' not found' in (regla_existente.msg | default(''))"
 
       #SOLO PARA LAGO AGRIO
