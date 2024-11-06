@@ -137,7 +137,7 @@
           - "Estado: {{ regla_existente.gathered['disabled'] | default(false) | ternary('Deshabilitada', 'Habilitada') }}"
 
 
-
+##### PROBADO OK HASTA AQUI
 
 
     - name: Mostrar el valor de accion_ip
