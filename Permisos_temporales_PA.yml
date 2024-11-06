@@ -66,8 +66,8 @@
       #SOLO PARA QUITO O GUAYAQUIL
     - name: Obtener la regla de seguridad actual (Quito / Gye)
       paloaltonetworks.panos.panos_security_rule:
-        provider:
-        ip_address: "{{ device.ip_address }}"
+        provider:   
+        ip_address: "{{ device.ip_address | replace('\n', '') | trim }}"  # Elimina espacios y saltos de línea
         username: "{{ device.username }}"
         password: "{{ device.password }}"
         rule_name: "{{ rule_name }}"
