@@ -67,9 +67,9 @@
     - name: Obtener la regla de seguridad actual (Quito / Gye)
       paloaltonetworks.panos.panos_security_rule:
         provider:   
-        ip_address: "{{ device.ip_address | replace('\n', '') | trim }}"  # Elimina espacios y saltos de línea
-        username: "{{ device.username }}"
-        password: "{{ device.password }}"
+          ip_address: "{{ device.ip_address | replace('\n', '') | trim }}"  # Elimina espacios y saltos de línea
+          username: "{{ device.username }}"
+          password: "{{ device.password }}"
         rule_name: "{{ rule_name }}"
         device_group: "{{ device.device_group | default(omit) }}"
         vsys: "{{ vsys | default('vsys1') }}"
@@ -77,7 +77,8 @@
       register: regla_existente
       when: not device.use_panorama # Ejecuta sólo para Quito y Guayaquil
       ignore_errors: true  # Continúa la ejecución aunque no se encuentre la regla
-      
+
+         
       #failed_when: "'Object 'testawx1' not found' in (regla_existente.msg | default(''))"
 
       #SOLO PARA LAGO AGRIO
