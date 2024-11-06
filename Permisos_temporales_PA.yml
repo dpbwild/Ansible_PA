@@ -72,7 +72,7 @@
         state: gathered
       register: regla_existente
       when: not device.use_panorama  # Ejecuta sólo para Quito y Guayaquil
-      ignore_errors: true  # Continúa la ejecución aunque no se encuentre la regla
+   #   ignore_errors: true  # Continúa la ejecución aunque no se encuentre la regla
       
       #failed_when: "'Object 'testawx1' not found' in (regla_existente.msg | default(''))"
 
