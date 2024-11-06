@@ -93,11 +93,15 @@
       when: device.use_panorama  # Ejecuta sólo para Lago
       ignore_errors: true  # Continúa la ejecución aunque no se encuentre la regla
       
-           
+    - name: Mostrar datos de regla existente para depuración
+      debug:
+        var: regla_existente
+    
     - name: Validar existencia de la regla
       fail:
         msg: "La regla de seguridad '{{ rule_name }}' no existe en el firewall."
-      when: "regla_existente.gathered is not defined"
+      when: 
+        - regla_existente.gathered is not defined or regla_existente.gathered == {}
      
     #- name: Mostrar contenido completo de la regla existente obtenida para depuración
       #debug:
