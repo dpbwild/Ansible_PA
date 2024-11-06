@@ -57,12 +57,7 @@
     - name: Mostrar la IP y el tipo de configuración (Panorama o Firewall individual)
       debug:
         msg: "La IP para la ubicación '{{ ubicacion }}' es: {{ device.ip_address }}; uso de Panorama: {{ device.use_panorama }}"
-
-
-    - name: Mostrar el valor de accion_ip
-      debug:
-        msg: "El valor de accion_ip es: {{ ip_address }}"
-        
+     
     - name: Convertir nueva_source_ip en lista si es texto
       set_fact:
         nueva_source_ip_list: "{{ nueva_source_ip | from_json }}"
