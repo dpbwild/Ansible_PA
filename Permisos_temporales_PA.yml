@@ -78,7 +78,7 @@
       when: not device.use_panorama # Ejecuta sólo para Quito y Guayaquil
      # ignore_errors: true  # Continúa la ejecución aunque no se encuentre la regla
 
-    - name: Mostrar datos de regla existente para depuración
+    - name: Mostrar datos de regla existente para depuración Quito/Gye
       debug:
         var: regla_existente
       #failed_when: "'Object 'testawx1' not found' in (regla_existente.msg | default(''))"
@@ -91,13 +91,13 @@
         vsys: "{{ vsys }}"
         device_group: "SLG-RCOFWP-HA"
         state: gathered
-      register: regla_existente
+      register: regla_existente_p
       when: device.use_panorama  # Ejecuta sólo para Lago
      # ignore_errors: true  # Continúa la ejecución aunque no se encuentre la regla
       
-    - name: Mostrar datos de regla existente para depuración
+    - name: Mostrar datos de regla existente para depuración Lago
       debug:
-        var: regla_existente
+        var: regla_existente_p
     
     - name: Validar existencia de la regla
       fail:
